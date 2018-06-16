@@ -2,7 +2,7 @@
 config-formula
 ================
 
-A SaltStack formula that puts directories onto minions. It will take the directory structure in ```config/files/``` and recursively copy it onto a minion.
+A SaltStack formula that puts directories onto minions. It will take the directory structure in ``config/files/`` and recursively copy it onto a minion.
 By default, it copies the directory structure to `</app/config/>` on the minion. Files can be jinja templated.
 
 **NOTE**
