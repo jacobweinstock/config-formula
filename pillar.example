@@ -1,0 +1,3 @@
+config_formula:
+  lookup:
+    base_location: /app/config

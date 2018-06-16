@@ -1,0 +1,17 @@
+. {
+    proxy . 8.8.8.8:53 {
+        protocol https_google
+    }
+    prometheus :9153
+    health :8081
+    errors stdout
+    log stdout
+}
+jswlabs.com {
+    file db.jswlabs.com jswlabs.com
+    prometheus :9154
+    health :8080
+    errors stdout
+    log stdout
+    reload 10s
+}
