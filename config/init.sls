@@ -4,11 +4,11 @@
 {% set files_found = salt['cp.list_master_dirs']() %}
 
 
-{% for dir, base_location in directories.items() %}
+{% for dir, data in directories.items() %}
 {% if files_found | select('match', '^config') | list | length > 2 %}
 {{dir}}_files_on_disk:
   file.recurse:
-    - name: {{ base_location }}
+    - name: {{ data.base_location }}
     - source: salt://config/files
     - clean: True
     - template: jinja
