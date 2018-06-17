@@ -1,3 +1,5 @@
 config_formula:
   lookup:
-    base_location: /app/config
+    directories:
+      coredns:
+        base_location: /app/config
