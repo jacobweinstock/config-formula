@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{% set directories = salt['pillar.get']('config_formula:lookup:directories', {'default': {'base_location': '/app/config')}} %}
+{% set directories = salt['pillar.get']('config_formula:lookup:directories', {'default': {'base_location': '/app/config'}}) %}
 {% set files_found = salt['cp.list_master_dirs']() %}
 
 
