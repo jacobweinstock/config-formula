@@ -4,17 +4,27 @@
 {% set files_found = salt['cp.list_master_dirs']() %}
 {% set files = files_found | select('match', '^config/files/') | list %}
 
+{% set result = [] %}
+{% for dir in files %}
+{% do result.append(dir.split('/')|last) %}
+{% endfor %}
 
-{% for dir, data in directories.items() %}
-  {% if files | length > 0 %}
-    {% for file in files %}
-{{dir}}_files_on_disk:
+{% set dir_result = {} %}
+{% for name in result %}
+{% if directories.get(name) %}
+{% do dir_result.update({name: {'base': directories[name]['base_location']}}) %}
+{% else %}
+{% do dir_result.update({name: {'base': '/app/config'}}) %}
+{% endif %}
+{% endfor %}
+
+{% for name, base in dir_result.iteritems() %}
+{{name}}_files_on_disk:
   file.recurse:
-    - name: {{ data.base_location }}
-    - source: salt://config/files/{{ file|split('/')|last }}
+    - name: {{ base.base }}/{{ name }}
+    - source: salt://config/files/{{ name }}
     - clean: True
     - template: jinja
     - include_empty: True
-    {% endfor %}
-  {% endif %}
 {% endfor %}
+

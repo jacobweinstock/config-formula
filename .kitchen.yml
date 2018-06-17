@@ -1,0 +1,40 @@
+---
+driver:
+  name: docker_cli
+#  use_sudo: false
+
+transport:
+  name: docker_cli
+
+platforms:
+  - name: ubuntu
+    driver_config:
+      require_chef_omnibus: false
+      platform: ubuntu
+      image: ubuntu:16.04
+
+provisioner:
+  name: salt_solo
+  require_chef_omnibus: false
+  formula: config
+  log_level: info
+  pillars_from_files:
+    config.sls: pillar.example
+  state_top:
+    base:
+      '*':
+        - config
+  pillars:
+    top.sls:
+      base:
+        '*':
+          - config
+    config.sls:
+      config_formula:
+        lookup:
+          directories:
+            coredns:
+              base_location: /app/config
+
+suites:
+  - name: salt-IT
