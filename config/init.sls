@@ -6,8 +6,8 @@
 
 
 {% for dir, data in directories.items() %}
-{% if files | length > 0 %}
-{% for file in files %}
+  {% if files | length > 0 %}
+    {% for file in files %}
 {{dir}}_files_on_disk:
   file.recurse:
     - name: {{ data.base_location }}
@@ -15,5 +15,6 @@
     - clean: True
     - template: jinja
     - include_empty: True
-{% endif %}
+    {% endfor %}
+  {% endif %}
 {% endfor %}
