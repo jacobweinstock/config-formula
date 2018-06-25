@@ -3,13 +3,14 @@
 # gets a lease or a lease expires.
 
 LOGFILE=/tmp/kea-hook-runscript-debug.log
+HOSTSFILE=/app/config/shared/hostsfile/hosts
 
 case "$1" in
   "lease4_select")
-    if $(grep -q ${KEA_LEASE4_ADDRESS} /app/config/shared/hostsfile/hosts); then
+    if $(grep -q ${KEA_LEASE4_ADDRESS} $HOSTSFILE); then
       pass
     else
-      cat <<EOF >> /app/config/shared/hostsfile/hosts
+      cat <<EOF >> $HOSTSFILE
 ${KEA_LEASE4_ADDRESS}  ${KEA_LEASE4_HOSTNAME}
 EOF
     fi
@@ -27,7 +28,7 @@ EOF
     echo >> $LOGFILE
     ;;
   "lease4_release"|"lease4_expire")
-    sed -i "/${KEA_LEASE4_ADDRESS}/d" /app/config/shared/hostsfile/hosts
+    sed -i "/${KEA_LEASE4_ADDRESS}/d" $HOSTSFILE
     echo "== $1 ==" >> $LOGFILE
     date >> $LOGFILE
     env >> $LOGFILE
