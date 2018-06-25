@@ -1,9 +1,7 @@
 #!/bin/sh
-# This script adds and removes routes in the Linux kernel whenever a DHCP client
+# This script adds and removes records in a hosts formatted file whenever a DHCP client
 # gets a lease or a lease expires.
 
-# Protocol to use in "ip route"
-PROTO=static
 LOGFILE=/tmp/kea-hook-runscript-debug.log
 
 case "$1" in
