@@ -2,16 +2,38 @@
     proxy . 8.8.8.8:53 {
         protocol https_google
     }
+    file db.jswlabs.com jswlabs.com
+    file db.192.168 168.192.in-addr.arpa
+    hosts /app/config/shared/hostsfile/hosts jswlabs.com {
+        fallthrough
+    }
     prometheus :9153
     health :8081
     errors stdout
     log stdout
+    reload 10s
 }
 jswlabs.com {
     file db.jswlabs.com jswlabs.com
+    file db.192.168 168.192.in-addr.arpa
+    hosts /app/config/shared/hostsfile/hosts jswlabs.com {
+        fallthrough
+    }
     prometheus :9154
     health :8080
     errors stdout
     log stdout
     reload 10s
+}
+168.192.in-addr.arpa.arpa arpa.jswlabs.com {
+
+    reverse 192.168.1.0/24 {
+        # template of the ip injection to hostname, zone resolved to arpa.company.org.
+        hostname "ip-{ip}.v4.{zone[2]}"
+
+        ttl 3600
+
+        # fallthrough is not required, v4.arpa.company.org. will be only answered here
+    }
+
 }
