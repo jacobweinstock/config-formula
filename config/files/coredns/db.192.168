@@ -1,0 +1,17 @@
+$TTL  604800
+@  1D  IN  SOA ns1.jswlabs.com. hostmaster.jswlabs.com. (
+                              2002022401 ; serial
+                              3H ; refresh
+                              15 ; retry
+                              1w ; expire
+                              3h ; nxdomain ttl
+                             )
+;
+
+; name servers - NS records
+
+@   IN    NS    ns1.jswlabs.com.
+
+; PTR records
+
+216.1     IN  PTR ns1.jswlabs.com.
