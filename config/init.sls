@@ -24,6 +24,7 @@
     - name: {{ base.base }}/{{ name }}
     - source: salt://config/files/{{ name }}
     - clean: True
+    - file_mode: 0744
     - template: jinja
     - include_empty: True
 {% endfor %}
